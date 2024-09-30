@@ -22,7 +22,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: swagger-ui
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 修正箇所
 
   deploy:
     needs: build
@@ -36,5 +36,5 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-        env: 
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        with:  # 修正箇所
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 修正箇所
