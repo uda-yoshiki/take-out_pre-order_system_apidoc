@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Chekcout code
+      - name: Checkout code
         uses: actions/checkout@v4
       - name: Install swagger-cli
         run: npm install -g swagger-cli
@@ -21,11 +21,8 @@ jobs:
       - name: Upload Documents
         uses: actions/upload-pages-artifact@v3
         with:
-          # 絶対パスを指定
           path: swagger-ui
 
-  # Deploy the artifact to GitHub pages.
-  # This is a separate job so that only actions/deploy-pages has the necessary permissions.
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -38,3 +35,5 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
