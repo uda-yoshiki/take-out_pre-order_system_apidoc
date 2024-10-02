@@ -10,6 +10,37 @@ servers:
   - url: "test.mykafkacluster.org:18092"
     description: "テストサーバー"
 defaultContentType: "application/json"
+paths:
+  /streetlights:
+    get:
+      summary: "全ての街灯の情報を取得する"
+      operationId: "getAllStreetlights"
+      responses:
+        '200':
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Streetlight"
+    post:
+      summary: "新しい街灯を追加する"
+      operationId: "addStreetlight"
+      requestBody:
+        description: "新しい街灯の情報"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Streetlight"
+      responses:
+        '201':
+          description: "作成成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Streetlight"
 channels:
   街灯.1.0.イベント.{街灯ID}.照明.測定:
     description: "照明の測定値を送受信するトピック。"
@@ -122,6 +153,18 @@ components:
           type: "string"
           format: "date-time"
           description: "メッセージが送信された日時。"
+    Streetlight:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "街灯のID。"
+        location:
+          type: "string"
+          description: "街灯の位置。"
+        name:
+          type: "string"
+          description: "街灯の名前。"
   parameters:
     街灯ID:
       description: "街灯のID。"
